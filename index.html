@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Arihant Billing Software</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="main">
+
+  <!-- LEFT FORM PANEL -->
+  <div class="form-section">
+
+    <h1>🧾 Arihant Billing</h1>
+
+    <button id="modeToggle">🌙 Toggle Dark Mode</button>
+
+    <!-- CONSIGNEE DETAILS -->
+    <h2>Consignee (Ship To)</h2>
+
+    <label>Consignee Name</label>
+    <input id="shipName" value="RubyHall Clinic">
+
+    <label>Consignee Address</label>
+    <textarea id="shipAddress">Pune-411001</textarea>
+
+    <label>Consignee GSTIN</label>
+    <input id="shipGST" value="27AAATHP1145P1Z9">
+
+
+    <!-- BUYER DETAILS -->
+    <h2>Buyer (Bill To)</h2>
+
+    <label>Buyer Name</label>
+    <input id="buyerName" value="RubyHall Clinic">
+
+    <label>Buyer Address</label>
+    <textarea id="buyerAddress">Pune-411001</textarea>
+
+    <label>Buyer GSTIN</label>
+    <input id="buyerGST" value="27AAATHP1145P1Z9">
+
+
+    <!-- INVOICE INFO -->
+    <h2>Invoice Info</h2>
+
+    <label>Invoice Number</label>
+    <input id="invoiceNo" value="ABS/25-26/70">
+
+    <label>Invoice Date</label>
+    <input id="invoiceDate" value="5-Feb-26">
+
+    <label>Delivery Note</label>
+    <input id="deliveryNote" value="-">
+
+    <label>Mode / Terms of Payment</label>
+    <input id="paymentMode" value="Payment">
+
+
+    <!-- ITEM DETAILS -->
+    <h2>Item Details</h2>
+
+    <label>Description</label>
+    <input id="itemDesc"
+      value="SpareParts of Money Counting Machine Repair/ImageBoard">
+
+    <label>Quantity</label>
+    <input id="itemQty" type="number" value="1">
+
+    <label>Rate (₹)</label>
+    <input id="itemRate" type="number" value="7500">
+
+    <label>Discount (-₹)</label>
+    <input id="discount" type="number" value="0">
+
+    <label>Extra Charges (+₹)</label>
+    <input id="extraCharge" type="number" value="0">
+
+    <label>Buyback (-₹)</label>
+    <input id="buyback" type="number" value="0">
+
+    <label>GST Percentage</label>
+    <select id="gstPercent">
+      <option value="5">GST 5%</option>
+      <option value="12">GST 12%</option>
+      <option value="18" selected>GST 18%</option>
+      <option value="28">GST 28%</option>
+    </select>
+
+
+    <button class="generateBtn" onclick="generateInvoice()">
+      ✅ Generate Invoice
+    </button>
+
+    <button class="printBtn" onclick="window.print()">
+      🖨 Print Invoice
+    </button>
+
+  </div>
+
+
+  <!-- RIGHT INVOICE PREVIEW -->
+  <div class="preview-section">
+
+    <div class="invoicePaper">
+
+      <h2 class="center"><center>TaxInvoice</center></h2>
+
+      <!-- HEADER -->
+      <div class="topHeader">
+
+        <!-- SELLER DETAILS -->
+        <div class="sellerBox">
+          <b>Arihant Billing Solution</b><br>
+          14/B-204, AnandVatikaCHS,<br>
+          Siddharth Nagar, S.V.Road,<br>
+          Goregaon(West), Mumbai-400104<br>
+          Mob: 9821920973<br>
+          GSTIN: 27AQXPS2594Q1ZD<br><br>
+
+          <b>Consignee (Ship To)</b><br>
+          <span id="outShipName">RubyHall Clinic</span><br>
+          <span id="outShipAddress">Pune-411001</span><br>
+          GSTIN: <span id="outShipGST">27AAATHP1145P1Z9</span><br><br>
+
+          <b>Buyer (Bill To)</b><br>
+          <span id="outBuyerName">RubyHall Clinic</span><br>
+          <span id="outBuyerAddress">Pune-411001</span><br>
+          GSTIN: <span id="outBuyerGST">27AAATHP1145P1Z9</span>
+        </div>
+
+        <!-- META BOX -->
+        <table class="invoiceMeta">
+          <tr><td>Invoice No.</td><td id="outInvNo">ABS/25-26/70</td></tr>
+          <tr><td>Dated</td><td id="outDate">5-Feb-26</td></tr>
+          <tr><td>Delivery Note</td><td id="outDelivery">-</td></tr>
+          <tr><td>Mode/Terms</td><td id="outPayment">Payment</td></tr>
+        </table>
+
+      </div>
+
+
+      <!-- ITEM TABLE -->
+      <table class="itemsMain">
+        <thead>
+          <tr>
+            <th>Sl</th>
+            <th>Description</th>
+            <th>Qty</th>
+            <th>Rate</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td id="outItem">SpareParts Repair</td>
+            <td id="outQty">1</td>
+            <td id="outRate">7500</td>
+            <td id="outAmt">7500</td>
+          </tr>
+
+          <tr>
+            <td colspan="4" align="right"><b>Discount (-)</b></td>
+            <td>₹ <span id="outDiscount">0</span></td>
+          </tr>
+
+          <tr>
+            <td colspan="4" align="right"><b>Extra Charges (+)</b></td>
+            <td>₹ <span id="outExtra">0</span></td>
+          </tr>
+
+          <tr>
+            <td colspan="4" align="right"><b>Buyback (-)</b></td>
+            <td>₹ <span id="outBuyback">0</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+
+      <!-- GST SUMMARY -->
+      <table class="gstTable">
+        <tr>
+          <th>Taxable Value</th>
+          <th>CGST</th>
+          <th>SGST</th>
+          <th>Total Tax</th>
+        </tr>
+        <tr>
+          <td id="taxableValue">7500</td>
+          <td id="cgstVal">675</td>
+          <td id="sgstVal">675</td>
+          <td id="totalTax">1350</td>
+        </tr>
+      </table>
+
+
+      <!-- FINAL TOTAL -->
+      <div class="totalBox">
+        <b>Total Payable: ₹ <span id="outTotal">8850</span></b>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
