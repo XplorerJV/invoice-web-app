@@ -1,0 +1,156 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap");
+
+:root {
+  --bg: #f4fff6;
+  --glass: rgba(255, 255, 255, 0.75);
+  --border: rgba(0, 0, 0, 0.15);
+  --text: #111;
+  --primary: #00c853;
+}
+
+body.dark {
+  --bg: radial-gradient(circle at top, #0a1a33, #05070f);
+  --glass: rgba(15, 25, 45, 0.75);
+  --border: rgba(255, 255, 255, 0.12);
+  --text: #fff;
+  --primary: #00ffae;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  height: 100vh;
+}
+
+.form-section {
+  padding: 25px;
+  background: var(--glass);
+  backdrop-filter: blur(18px);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+}
+
+label {
+  display: block;
+  margin-top: 12px;
+  font-weight: bold;
+}
+
+input, textarea, select {
+  width: 100%;
+  margin-top: 6px;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+textarea {
+  resize: none;
+  height: 55px;
+}
+
+.generateBtn, .printBtn, #modeToggle {
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.generateBtn {
+  background: linear-gradient(135deg, var(--primary), #00ff99);
+}
+
+.printBtn {
+  background: black;
+  color: white;
+}
+
+.invoicePaper {
+  width: 820px;
+  margin: auto;
+  background: white;
+  padding: 30px;
+  border: 1px solid black;
+}
+
+.invoicePaper * {
+  color: black;
+}
+
+.itemsMain, .gstTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.itemsMain th, .itemsMain td,
+.gstTable th, .gstTable td {
+  border: 1px solid black;
+  padding: 8px;
+}
+
+.totalBox {
+  text-align: right;
+  margin-top: 15px;
+  font-size: 16px;
+}
+
+.preview-section {
+  padding: 20px;
+  overflow-y: auto;
+}
+
+button:hover {
+  transform: scale(1.02);
+  transition: 0.2s;
+}
+
+/* ============================= */
+/* ✅ PRINT SETTINGS FIX */
+/* ============================= */
+
+@media print {
+
+  /* पूरा page hide */
+  body * {
+    visibility: hidden !important;
+  }
+
+  /* सिर्फ invoice दिखे */
+  .invoicePaper,
+  .invoicePaper * {
+    visibility: visible !important;
+  }
+
+  /* invoice को full page top पर ले आओ */
+  .invoicePaper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 20px !important;
+    border: none !important;
+  }
+
+  /* background हटाओ */
+  body {
+    background: white !important;
+  }
+
+  /* buttons print में ना आए */
+  button,
+  .form-section {
+    display: none !important;
+  }
+}
